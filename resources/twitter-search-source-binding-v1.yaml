@@ -1,0 +1,43 @@
+apiVersion: camel.apache.org/v1alpha1
+kind: KameletBinding
+metadata:
+  name: twitter-search-source-binding
+spec:
+  source:
+    ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: twitter-search-source
+    properties:
+      accessToken: XXXX
+      accessTokenSecret: XXXX
+      apiKey: XXXX
+      apiKeySecret: XXXX
+      keywords: "#iPhone14Pro"
+  steps:
+  - ref:
+      apiVersion: camel.apache.org/v1alpha1
+      kind: Kamelet
+      name: insert-header-action
+    properties:
+      name:  CamelCloudEventTime
+      value: "2018-04-05T17:31:00Z"
+  - ref:
+      apiVersion: camel.apache.org/v1alpha1
+      kind: Kamelet
+      name: insert-header-action
+    properties:
+      name:  CamelCloudEventSource
+      value: org.apache.camel.event.twitter
+  - ref:
+      apiVersion: camel.apache.org/v1alpha1
+      kind: Kamelet
+      name: insert-header-action
+    properties:
+      name:  CamelCloudEventType
+      value: twitter.search.source
+  sink:
+    ref:
+      kind: Broker
+      apiVersion: eventing.knative.dev/v1
+      name: default

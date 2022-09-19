@@ -1,0 +1,24 @@
+specVersion: 0.25.0
+name: translate
+namespace: ""
+runtime: node
+registry: ""
+image: quay.io/lanceball/translate:latest
+imageDigest: sha256:c6ba2713914faf2d2fb2679b29bc2c4059f90ad8c99ee0b62f37c9c230ca2bb9
+build: local
+git: {}
+buildpacks: []
+volumes: []
+buildEnvs: []
+envs:
+- name: GOOGLE_APPLICATION_CREDENTIALS
+  value: service-account-file.json
+annotations: {}
+options: {}
+labels: []
+healthEndpoints:
+  liveness: /health/liveness
+  readiness: /health/readiness
+created: 2022-09-11T11:04:02.953294-04:00
+invocation:
+  format: cloudevent

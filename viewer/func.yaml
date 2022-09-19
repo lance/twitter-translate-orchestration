@@ -1,0 +1,24 @@
+specVersion: 0.25.0
+name: viewer
+namespace: ""
+runtime: go
+registry: ""
+image: quay.io/lanceball/viewer:latest
+imageDigest: sha256:cc18d72dd6080ec05fb69db024b99ae89acfe5ea1cca075d21b1707944fbd103
+build: local
+git: {}
+buildpacks:
+- paketo-buildpacks/go-dist
+- ghcr.io/boson-project/go-function-buildpack:tip
+volumes: []
+buildEnvs: []
+envs: []
+annotations: {}
+options: {}
+labels: []
+healthEndpoints:
+  liveness: /health/liveness
+  readiness: /health/readiness
+created: 2022-09-16T13:08:43.380874-04:00
+invocation:
+  format: cloudevent
