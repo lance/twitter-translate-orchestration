@@ -1,47 +1,11 @@
-# Node.js Cloud Events Function
+# Node.js Translation Function
 
-Welcome to your new Node.js function project! The boilerplate function
-code can be found in [`index.js`](./index.js). This function is meant
-to respond to [Cloud Events](https://cloudevents.io/).
+This is a Node.js Knative function which recieves CloudEvents containing tweet text, and uses the Google Translation API to convert the text into English. It responds to the caller (a Knative Broker) with a new CloudEvent containing the translation.
 
-## Local execution
+## Deployment
 
-After executing `npm install`, you can run this function locally by executing
-`npm run local`.
+This function can be deployed to a Knative-enabled cluster with the following command.
 
-The runtime will expose three endpoints.
-
-  * `/` The endpoint for your function.
-  * `/health/readiness` The endpoint for a readiness health check
-  * `/health/liveness` The endpoint for a liveness health check
-
-The health checks can be accessed in your browser at
-[http://localhost:8080/health/readiness]() and
-[http://localhost:8080/health/liveness](). You can use `curl` to `POST` an event
-to the function endpoint:
-
-```console
-curl -X POST -d '{"name": "Tiger", "customerId": "0123456789"}' \
-  -H'Content-type: application/json' \
-  -H'Ce-id: 1' \
-  -H'Ce-source: cloud-event-example' \
-  -H'Ce-type: dev.knative.example' \
-  -H'Ce-specversion: 1.0' \
-  http://localhost:8080
 ```
-
-The readiness and liveness endpoints use
-[overload-protection](https://www.npmjs.com/package/overload-protection) and
-will respond with `HTTP 503 Service Unavailable` with a `Client-Retry` header if
-your function is determined to be overloaded, based on the memory usage and
-event loop delay.
-
-## Testing
-
-This function project includes a [unit test](./test/unit.js) and an
-[integration test](./test/integration.js). All `.js` files in the test directory
-are run.
-
-```console
-npm test
+$ func deploy
 ```

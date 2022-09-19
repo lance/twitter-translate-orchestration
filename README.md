@@ -18,11 +18,12 @@ the logs.
 ![System diagram](diagram.png "system diagram")
 
 ## Prerequisites
-* You need to have a cluster with Knative installed
-* You need to have CamelK https://camel.apache.org/camel-k/1.9.x/installation/installation.html installed
+* A cluster with Knative installed
+* CamelK https://camel.apache.org/camel-k/1.9.x/installation/installation.html installed
+* Google Translation API key in `translate/service-account-file.json`
 
 ## Steps
-* Install a broker with `kn broker create default`
+* Install a default Knative Broker with `kn broker create default`
 * Update the Twitter credentials in [./resources/twitter-search-source-binding.yaml](resources/twitter-search-source-binding.yaml)
 * Install the Kamelet with `kubectl apply -f resources/twitter-search-source-binding.yaml`
 * Create a trigger with `kn trigger create twitter-trigger -s translate --filter type=twitter.search.source`
