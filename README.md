@@ -21,11 +21,42 @@ the logs.
 * A cluster with Knative installed
 * CamelK https://camel.apache.org/camel-k/1.9.x/installation/installation.html installed
 * Google Translation API key in `translate/service-account-file.json`
+* Update the Twitter API credentials in [./resources/twitter-search-source-binding.yaml](resources/twitter-search-source-binding.yaml)
+
 
 ## Steps
-* Install a default Knative Broker with `kn broker create default`
-* Update the Twitter credentials in [./resources/twitter-search-source-binding.yaml](resources/twitter-search-source-binding.yaml)
-* Install the Kamelet with `kubectl apply -f resources/twitter-search-source-binding.yaml`
-* Create a trigger with `kn trigger create twitter-trigger -s translate --filter type=twitter.search.source`
-* Create a trigger with `kn trigger create translate-trigger -s viewer --filter type=knative.function.translation`
-* Deploy the `translate` and `viewer` functions with `func deploy -p viewer` and `func deploy -p translate`.
+* Deploy the `translate` and `viewer` functions
+```
+func deploy -p viewer
+func deploy -p translate
+```
+
+* Install a default Knative Broker
+```
+kn broker create default
+```
+
+* Create the Tweet->Translate trigger
+```
+kn trigger create twitter-trigger -s translate --filter type=twitter.search.source
+```
+
+* Create the Translation->Viewer trigger
+```
+kn trigger create translate-trigger -s viewer --filter type=knative.function.translation
+```
+
+* Install the Kamelet
+```
+kubectl apply -f resources/twitter-search-source-binding-v1.yaml
+```
+
+* Check the logs
+```
+k logs -l app=viewer --tail 10 -f
+```
+
+* Cleanup
+```
+./resources/teardown.sh
+```

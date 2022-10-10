@@ -1,13 +1,12 @@
 specVersion: 0.25.0
 name: translate
-namespace: ""
+namespace: default
 runtime: node
-registry: ""
+registry: quay.io/lanceball
 image: quay.io/lanceball/translate:latest
-imageDigest: sha256:c6ba2713914faf2d2fb2679b29bc2c4059f90ad8c99ee0b62f37c9c230ca2bb9
-build: local
-git: {}
+imageDigest: sha256:5fdeadcace2e173688233f8ee7032630a917c8859a8468191ee22b33a8358fb8
 buildpacks: []
+builder: pack
 volumes: []
 buildEnvs: []
 envs:
@@ -15,7 +14,9 @@ envs:
   value: service-account-file.json
 annotations: {}
 options: {}
-labels: []
+labels:
+- key: app
+  value: translate
 healthEndpoints:
   liveness: /health/liveness
   readiness: /health/readiness
